@@ -3,7 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import javax.persistence.Query;
+
 import javax.transaction.Transactional;
 
 import static jm.task.core.jdbc.util.Util.getSessionFactory;
@@ -32,8 +32,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = factory.openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createSQLQuery(CREATE_TABLE).addEntity(User.class);
-            query.executeUpdate();
+            session.createSQLQuery(CREATE_TABLE).addEntity(User.class).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,8 +49,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = factory.openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createSQLQuery(DROP_TABLE).addEntity(User.class);
-            query.executeUpdate();
+            session.createSQLQuery(DROP_TABLE).addEntity(User.class).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,11 +117,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
 
         Transaction transaction = null;
-        Query query;
         try (Session session = factory.getCurrentSession()) {
             transaction = session.beginTransaction();
-            query = session.createSQLQuery("truncate table users");
-            query.executeUpdate();
+            session.createSQLQuery("truncate table users").executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

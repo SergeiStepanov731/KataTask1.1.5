@@ -3,9 +3,6 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
-import javax.transaction.Transactional;
-
 import static jm.task.core.jdbc.util.Util.getSessionFactory;
 import org.hibernate.Transaction;
 
@@ -26,7 +23,6 @@ public class UserDaoHibernateImpl implements UserDao {
 
 
     @Override
-    @Transactional
     public void createUsersTable() {
 
         Transaction transaction = null;
